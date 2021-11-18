@@ -19,7 +19,7 @@ public class Service1 {
 	@GET
     @Path("/tweetID/{tweet_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public static String convertToJson(@PathParam("tweet_id") String tweet_id) {
+    public String convertToJson(@PathParam("tweet_id") String tweet_id) {
         Connection connection = null;
         
         // Creates an arraylist to store the author information queried for each tweet ID
@@ -29,7 +29,7 @@ public class Service1 {
         JSONArray final_json = new JSONArray();
         
         // Creates an array to store all tweets ID entered by the user
-        String[] input_tweet_id = tweet_id.split("#");
+        String[] input_tweet_id = tweet_id.split("\\*");
             
         // Queries the results according to user input and convert them into json format
         try {
@@ -37,7 +37,7 @@ public class Service1 {
         		connection = getConnection();
         		author_info = findAuthors(input_tweet_id[i], connection);
         		for(int j = 0; j < author_info.size() ; j++){
-        			String[] split_info = author_info.get(j).split("#"); 
+        			String[] split_info = author_info.get(j).split("\\*"); 
         			JSONObject json_obj = new JSONObject();
         			for(int k =0; k < split_info.length ; k++){
         				json_obj.put("tweet_id", split_info[0]);
@@ -110,7 +110,7 @@ public class Service1 {
 	    	String author_id = results.getString("author_id");
 		    String author_name = results.getString("author_name");
 		    String img_link = results.getString("img_link");
-		    selectResults.add(tweet_id + "#" + author_id + "#" + author_name + "#" + img_link);
+		    selectResults.add(tweet_id + "*" + author_id + "*" + author_name + "*" + img_link);
 	    }
 	    statement.close();
 	    

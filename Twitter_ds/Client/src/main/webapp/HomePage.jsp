@@ -27,7 +27,7 @@
               	result=chk[i].value;
               }
               else if(chk[i].checked){
-              	result+='#'+chk[i].value;
+              	result+='*'+chk[i].value;
               }
           } 
       

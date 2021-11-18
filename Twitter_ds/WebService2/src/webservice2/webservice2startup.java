@@ -6,7 +6,7 @@ import com.sun.net.httpserver.HttpServer;
  
 public class webservice2startup {
  
-    static final String BASE_URI = "http://localhost:9998/webservice2/";
+    static final String BASE_URI = "http://localhost:9987/webservice2/";
  
     public static void main(String[] args) {
         try {

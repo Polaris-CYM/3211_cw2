@@ -24,7 +24,7 @@
           var rdo=document.getElementsByName('rdo'); 
           var result='';
       
-          for(var i=0; i<chk.length; i++){ 
+          for(var i=0; i<rdo.length; i++){ 
               if(rdo[i].checked){
               	result=rdo[i].value;
               }
@@ -51,7 +51,7 @@
          <p>Please choose your interested author: </p>
       </div>
            
-      <form action="AuthorInfo.jsp" method="GET">
+      <form action="tweetlist.jsp" method="GET">
          <div>
          	<%-- uses a table to display a list of the queried author information --%>
             <table class="table">

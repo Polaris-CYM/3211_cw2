@@ -1,11 +1,11 @@
-package database2;
+package createDB2;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
 
 
 /**
- * Example of how to create and populate a table using JDBC.
+ * Create and populate a table using JDBC.
  *
  * <p>The program demonstrates</p>
  * <ul>
@@ -20,7 +20,7 @@ import java.util.*;
 public class CreateDB {
 
 
-  public static final String propsFile = "..//WebService2/src/database2/jdbc.properties";
+  public static final String propsFile = "..//WebService2/src/createDB2/jdbc.properties";
 
 
   /**
@@ -88,10 +88,12 @@ public class CreateDB {
     // Create a fresh table
 
     statement.executeUpdate("CREATE TABLE authorlist ("
+    		              + "id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
                           + "author_id CHAR(30) NOT NULL,"
-                          + "tweet_id VARCHAR(40) NOT NULL PRIMARY KEY,"
+                          + "author_name VARCHAR(50) NOT NULL,"
+                          + "tweet_id VARCHAR(40) NOT NULL,"
                           + "tweet_title VARCHAR(150) NOT NULL,"
-                          + "tweet_image VARCHAR(5000) NOT NULL)");
+                          + "tweet_image VARCHAR(500) NOT NULL)");
     statement.close();
   }
 
@@ -111,7 +113,9 @@ public class CreateDB {
     // Prepare statement used to insert data
 
     PreparedStatement statement =
-     database.prepareStatement("INSERT INTO authorlist VALUES(?,?,?,?)");
+     database.prepareStatement("INSERT INTO authorlist"
+                             + "(author_id,author_name,tweet_id,tweet_title,tweet_image)"
+     		                 + "VALUES(?,?,?,?,?)");
 
     // Loop over input data, inserting it into table...
  
@@ -124,6 +128,7 @@ public class CreateDB {
         break;
       StringTokenizer parser = new StringTokenizer(line,",");
       String author_id = parser.nextToken();
+      String author_name = parser.nextToken();
       String tweet_id = parser.nextToken();
       String tweet_title = parser.nextToken();
       String tweet_image = parser.nextToken();
@@ -131,9 +136,10 @@ public class CreateDB {
       // Insert data into table
 
       statement.setString(1, author_id);
-      statement.setString(2, tweet_id);
-      statement.setString(3, tweet_title);
-      statement.setString(4, tweet_image);
+      statement.setString(2, author_name);
+      statement.setString(3, tweet_id);
+      statement.setString(4, tweet_title);
+      statement.setString(5, tweet_image);
       statement.executeUpdate();
 
     }
@@ -157,7 +163,7 @@ public class CreateDB {
     Connection database = null;
  
     try {
-      BufferedReader input = new BufferedReader(new FileReader(".//src/database2/authorlist.txt"));
+      BufferedReader input = new BufferedReader(new FileReader(".//src/createDB2/authorlist.txt"));
       database = getConnection();
       createTable(database);
       addData(input, database);

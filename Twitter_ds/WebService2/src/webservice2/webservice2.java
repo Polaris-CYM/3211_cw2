@@ -8,11 +8,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import com.google.gson.*;
 
-@Path("/two")
+@Path("/Author")
 public class webservice2 {
 	
-	public static final String propsFile = "..//Database2/src/jdbc.properties";
+	public static final String propsFile = "..//WebService2/src/createDB2/jdbc.properties";
 	
 	public static Connection getConnection() throws IOException, SQLException
 	  {
@@ -40,22 +41,58 @@ public class webservice2 {
 	    return DriverManager.getConnection(url, user, password);
 	  }
 	
-	 public static void findNames(String tweetid, Connection database)
+	 public static String findNames(String author_id, Connection database)
   		   throws SQLException
-  		  {
+  		  {	 
   		    Statement statement = database.createStatement();
   		    ResultSet results = statement.executeQuery(
-  		     "SELECT * FROM authorlist WHERE tweet_id =1460411500703535107");
+  		     "SELECT * FROM authorlist WHERE author_id ='" + author_id + "'");
+  		    List<Map<String,String>> list = new ArrayList<Map<String,String>>();
   		    while (results.next()) {
-  		      String author_id = results.getString("author_id");
-  		      String tweet_id = results.getString("tweet_id");
-  		      String tweet_title = results.getString("tweet_title");
-  		      String tweet_image = results.getString("tweet_image");
-  		      System.out.println(author_id);
-  		      System.out.println(tweet_id);
-  		      System.out.println(tweet_image);		      
+  		    	Map<String,String> map = new HashMap<String,String>();
+  		    	map.put("id",results.getString(1));
+  		    	map.put("author_id",results.getString(2));
+  		    	map.put("author_name",results.getString(3));
+  		    	map.put("tweet_id",results.getString(4));
+  		    	map.put("tweet_title",results.getString(5));
+  		    	map.put("tweet_image",results.getString(6));
+  		        list.add(map);	      
   		    }
   		    statement.close();
+  		    Gson gson = new Gson();
+            String jsonstr = null;
+            jsonstr = gson.toJson(list);
+            return jsonstr;
   		  }
-	
+	 
+	    @GET
+	    @Path("/authorid/{author_id}")
+	    @Produces(MediaType.APPLICATION_JSON)
+	    public static String addJSON(@PathParam("author_id") String author_id) {
+	        Connection connection = null;
+	        String result= null;
+	        try {
+				connection = getConnection();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	        try {
+	        	result = findNames(author_id, connection);
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        return result;
+	    }
+//	    public static void main(String[] argv)
+//		  {
+//			 System.out.println(addJSON("BillyM2k"));
+//		  }
+
 	}
+
