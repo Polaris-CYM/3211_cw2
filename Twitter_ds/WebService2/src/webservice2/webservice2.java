@@ -53,9 +53,10 @@ public class webservice2 {
   		    	map.put("id",results.getString(1));
   		    	map.put("author_id",results.getString(2));
   		    	map.put("author_name",results.getString(3));
-  		    	map.put("tweet_id",results.getString(4));
-  		    	map.put("tweet_title",results.getString(5));
-  		    	map.put("tweet_image",results.getString(6));
+  		    	map.put("author_image",results.getString(4));
+  		    	map.put("tweet_id",results.getString(5));
+  		    	map.put("tweet_content",results.getString(6));
+  		    	map.put("tweet_image",results.getString(7));
   		        list.add(map);	      
   		    }
   		    statement.close();

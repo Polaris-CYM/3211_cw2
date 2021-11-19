@@ -33,17 +33,25 @@
       
           // sets value to hidden input
       	  document.getElementById("hidden_id").value=result;
-          
-          console.log(result);
       } 
       
+      function toVaild(){
+          var val = document.getElementById("hidden_id").value;
+          if(val != ''){
+              return true;
+          }
+          else{
+              alert("Please select at lease one tweet!");
+              return false;
+          }
+      }
    </script>
    <body>
       <%-- guide for users --%>
       <div class="guide">
          <p>Please choose your interested tweet(s): </p>
       </div>
-      <form action="AuthorInfo.jsp" method="GET">
+      <form action="AuthorInfo.jsp" method="GET" onsubmit="return toVaild()">
          <div>
             <table class="table">
                <thead>

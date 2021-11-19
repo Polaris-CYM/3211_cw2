@@ -33,9 +33,20 @@
           // sets value to hidden input
       	  document.getElementById("hidden_id").value=result;
           
-          console.log(result);
+          if(result=='')
+        	  alert("Please select an author!")
       } 
       
+      function toVaild(){
+          var val = document.getElementById("hidden_id").value;
+          if(val != ''){
+              return true;
+          }
+          else{
+              alert("Please select an author!");
+              return false;
+          }
+      }
    </script>
    <body>
    	  <%-- gets parameters send by url and call service 1 to handle it --%>
@@ -51,7 +62,7 @@
          <p>Please choose your interested author: </p>
       </div>
            
-      <form action="tweetlist.jsp" method="GET">
+      <form action="tweetlist.jsp" method="GET" onsubmit="return toVaild()">
          <div>
          	<%-- uses a table to display a list of the queried author information --%>
             <table class="table">
@@ -96,8 +107,8 @@
                         </div>
                      </td>
                      <td>
-                        <div class="profile">
-                           <img src=<%=img_link%> alt="profile">
+                        <div>
+                           <img src=<%=img_link%> alt="Avatar">
                         </div>
                      </td>
                   </tr>

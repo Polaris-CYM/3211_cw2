@@ -91,8 +91,9 @@ public class CreateDB {
     		              + "id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
                           + "author_id CHAR(30) NOT NULL,"
                           + "author_name VARCHAR(50) NOT NULL,"
+                          + "author_image VARCHAR(500) NOT NULL,"
                           + "tweet_id VARCHAR(40) NOT NULL,"
-                          + "tweet_title VARCHAR(150) NOT NULL,"
+                          + "tweet_content VARCHAR(500) NOT NULL,"
                           + "tweet_image VARCHAR(500) NOT NULL)");
     statement.close();
   }
@@ -114,8 +115,8 @@ public class CreateDB {
 
     PreparedStatement statement =
      database.prepareStatement("INSERT INTO authorlist"
-                             + "(author_id,author_name,tweet_id,tweet_title,tweet_image)"
-     		                 + "VALUES(?,?,?,?,?)");
+                             + "(author_id,author_name,author_image,tweet_id,tweet_content,tweet_image)"
+     		                 + "VALUES(?,?,?,?,?,?)");
 
     // Loop over input data, inserting it into table...
  
@@ -129,17 +130,19 @@ public class CreateDB {
       StringTokenizer parser = new StringTokenizer(line,",");
       String author_id = parser.nextToken();
       String author_name = parser.nextToken();
+      String author_image = parser.nextToken();
       String tweet_id = parser.nextToken();
-      String tweet_title = parser.nextToken();
+      String tweet_content = parser.nextToken();
       String tweet_image = parser.nextToken();
 
       // Insert data into table
 
       statement.setString(1, author_id);
       statement.setString(2, author_name);
-      statement.setString(3, tweet_id);
-      statement.setString(4, tweet_title);
-      statement.setString(5, tweet_image);
+      statement.setString(3, author_image);
+      statement.setString(4, tweet_id);
+      statement.setString(5, tweet_content);
+      statement.setString(6, tweet_image);
       statement.executeUpdate();
 
     }
