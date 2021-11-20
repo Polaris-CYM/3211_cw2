@@ -8,7 +8,6 @@
 <%@ page import="com.sun.jersey.api.client.config.ClientConfig"%>
 <%@ page import="com.sun.jersey.api.client.config.DefaultClientConfig"%>
 <%@ page import="org.json.*"%>
-<%@ page import="java.io.*"%>
 <!DOCTYPE html>
 <html>
    <head>
@@ -21,15 +20,17 @@
       <script></script>
       <%-- gets parameters send by url and call service 2 to handle it --%>
       <%
-         String Authorid = request.getParameter("selected");
-         String json = getjson(Authorid);
+         String Username = request.getParameter("selected");
+         String json = getjson(Username);
          JSONArray jsonArray = getInfoOfChannels(json);
          JSONObject first  = jsonArray.getJSONObject(0);
          String name = first.get("author_name").toString();
          String author_image = first.get("author_image").toString();
          %>
-      <img src=<%=author_image%> alt="Avatar" class="avatar">
-      <h1><%=name%></h1>
+      <div class="head">
+         <img src=<%=author_image%> alt="Avatar" class="avatar">
+         <h1><%=name%></h1>
+      </div>
       <div class="container">
          <%
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -83,17 +84,19 @@
    </body>
    <style type="text/css">
       body{
-      text-align: center;
       background-color: #FFFFFF;
       width: 63%;
       margin: auto;
+      }
+      .head {
+      text-align: center;
       }
       h1{
       font-size: 40px;
       margin-top: 1%;
       }
       .avatar{
-      height: 250px;
+      height: 240px;
       margin-top: 2%;
       }
       .container{

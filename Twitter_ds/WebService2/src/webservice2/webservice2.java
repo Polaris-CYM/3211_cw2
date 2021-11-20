@@ -41,17 +41,17 @@ public class webservice2 {
 	    return DriverManager.getConnection(url, user, password);
 	  }
 	
-	 public static String findNames(String author_id, Connection database)
+	 public static String findNames(String username, Connection database)
   		   throws SQLException
   		  {	 
   		    Statement statement = database.createStatement();
   		    ResultSet results = statement.executeQuery(
-  		     "SELECT * FROM authorlist WHERE author_id ='" + author_id + "'");
+  		     "SELECT * FROM authorlist WHERE username ='" + username + "'");
   		    List<Map<String,String>> list = new ArrayList<Map<String,String>>();
   		    while (results.next()) {
   		    	Map<String,String> map = new HashMap<String,String>();
   		    	map.put("id",results.getString(1));
-  		    	map.put("author_id",results.getString(2));
+  		    	map.put("username",results.getString(2));
   		    	map.put("author_name",results.getString(3));
   		    	map.put("author_image",results.getString(4));
   		    	map.put("tweet_id",results.getString(5));
@@ -67,9 +67,9 @@ public class webservice2 {
   		  }
 	 
 	    @GET
-	    @Path("/authorid/{author_id}")
+	    @Path("/authorid/{username}")
 	    @Produces(MediaType.APPLICATION_JSON)
-	    public static String addJSON(@PathParam("author_id") String author_id) {
+	    public static String addJSON(@PathParam("username") String username) {
 	        Connection connection = null;
 	        String result= null;
 	        try {
@@ -82,7 +82,7 @@ public class webservice2 {
 				e1.printStackTrace();
 			}
 	        try {
-	        	result = findNames(author_id, connection);
+	        	result = findNames(username, connection);
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -90,10 +90,10 @@ public class webservice2 {
 			}
 	        return result;
 	    }
-//	    public static void main(String[] argv)
-//		  {
-//			 System.out.println(addJSON("BillyM2k"));
-//		  }
+	    public static void main(String[] argv)
+		  {
+			 System.out.println(addJSON("BillyM2k"));
+		  }
 
 	}
 

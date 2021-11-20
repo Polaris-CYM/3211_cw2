@@ -11,6 +11,13 @@ import javax.ws.rs.PathParam;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * Operations performed by web service 1
+ *
+ * @author Yumeng Chen
+ * @version 3.3 [2021-11-20]
+ */
+
 @Path("/findAuthor")
 public class Service1 {
 	
@@ -29,6 +36,7 @@ public class Service1 {
         JSONArray final_json = new JSONArray();
         
         // Creates an array to store all tweets ID entered by the user
+        // tweet ID connected by delimeter "*"
         String[] input_tweet_id = tweet_id.split("\\*");
             
         // Queries the results according to user input and convert them into json format
@@ -41,7 +49,7 @@ public class Service1 {
         			JSONObject json_obj = new JSONObject();
         			for(int k =0; k < split_info.length ; k++){
         				json_obj.put("tweet_id", split_info[0]);
-        				json_obj.put("author_id", split_info[1]);
+        				json_obj.put("username", split_info[1]);
         				json_obj.put("author_name", split_info[2]);
         				json_obj.put("img_link", split_info[3]);
         			}
@@ -107,18 +115,13 @@ public class Service1 {
 	    ArrayList<String> selectResults = new ArrayList<>();
 	    
 	    while (results.next()) {
-	    	String author_id = results.getString("author_id");
+	    	String username = results.getString("username");
 		    String author_name = results.getString("author_name");
 		    String img_link = results.getString("img_link");
-		    selectResults.add(tweet_id + "*" + author_id + "*" + author_name + "*" + img_link);
+		    selectResults.add(tweet_id + "*" + username + "*" + author_name + "*" + img_link);
 	    }
 	    statement.close();
 	    
 	    return selectResults;
 	}
-	
-//	public static void main(String[] argv)
-//	{
-//		System.out.println(convertToJson("1460255188128878593#1460462992374394881"));
-//	}
 }

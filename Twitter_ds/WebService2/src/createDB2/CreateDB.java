@@ -89,7 +89,7 @@ public class CreateDB {
 
     statement.executeUpdate("CREATE TABLE authorlist ("
     		              + "id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
-                          + "author_id CHAR(30) NOT NULL,"
+                          + "username CHAR(30) NOT NULL,"
                           + "author_name VARCHAR(50) NOT NULL,"
                           + "author_image VARCHAR(500) NOT NULL,"
                           + "tweet_id VARCHAR(40) NOT NULL,"
@@ -115,7 +115,7 @@ public class CreateDB {
 
     PreparedStatement statement =
      database.prepareStatement("INSERT INTO authorlist"
-                             + "(author_id,author_name,author_image,tweet_id,tweet_content,tweet_image)"
+                             + "(username,author_name,author_image,tweet_id,tweet_content,tweet_image)"
      		                 + "VALUES(?,?,?,?,?,?)");
 
     // Loop over input data, inserting it into table...
@@ -128,7 +128,7 @@ public class CreateDB {
       if (line == null)
         break;
       StringTokenizer parser = new StringTokenizer(line,",");
-      String author_id = parser.nextToken();
+      String username = parser.nextToken();
       String author_name = parser.nextToken();
       String author_image = parser.nextToken();
       String tweet_id = parser.nextToken();
@@ -137,7 +137,7 @@ public class CreateDB {
 
       // Insert data into table
 
-      statement.setString(1, author_id);
+      statement.setString(1, username);
       statement.setString(2, author_name);
       statement.setString(3, author_image);
       statement.setString(4, tweet_id);

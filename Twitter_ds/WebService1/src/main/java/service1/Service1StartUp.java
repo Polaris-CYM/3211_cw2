@@ -3,6 +3,13 @@ package service1;
 import java.io.IOException;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.net.httpserver.HttpServer;
+
+/**
+ * Start web service 1
+ *
+ * @author Yumeng Chen
+ * @version 1.0 [2021-11-12]
+ */
  
 public class Service1StartUp {
  

@@ -27,6 +27,7 @@
               	result=chk[i].value;
               }
               else if(chk[i].checked){
+            	// Uses "*" as delimeter
               	result+='*'+chk[i].value;
               }
           } 
@@ -35,6 +36,7 @@
       	  document.getElementById("hidden_id").value=result;
       } 
       
+   	  // Makes sure that the user's selection is not null
       function toVaild(){
           var val = document.getElementById("hidden_id").value;
           if(val != ''){
@@ -135,7 +137,6 @@
    </body>
    <style type="text/css">
       body{
-      	text-align: center;
       	background-color: #FFFFFF;
       	width: 50%;
       	margin: auto;
@@ -144,6 +145,7 @@
       	margin-top: 5%;
       	margin-bottom: 4%;
       	font-size: 30px;
+      	text-align: center;
       }
       img {
       	height: 200px;

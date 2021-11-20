@@ -76,7 +76,7 @@ public class CreateDB {
     	statement.executeUpdate("CREATE TABLE tweets_authors ("
     					  + "id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
                           + "tweet_id VARCHAR(30) NOT NULL UNIQUE,"
-                          + "author_id VARCHAR(50) NOT NULL,"
+                          + "username VARCHAR(50) NOT NULL,"
                           + "author_name VARCHAR(50) NOT NULL,"
                           + "img_link VARCHAR(200) NOT NULL)");
 
@@ -100,7 +100,7 @@ public class CreateDB {
 
     	PreparedStatement statement =
     		database.prepareStatement("INSERT INTO tweets_authors"
-						+ "(tweet_id,author_id,author_name,img_link)"
+						+ "(tweet_id,username,author_name,img_link)"
 						+ "VALUES"
 						+ "(?,?,?,?)");
 
@@ -108,21 +108,21 @@ public class CreateDB {
  
     	while (true) {
 
-    		// Obtain user ID, surname and forename from input file
+    		// Obtain tweet ID, author's username and author's name and the link of author's avatar from input file
 
     		String line = in.readLine();
     		if (line == null)
     			break;
     		StringTokenizer parser = new StringTokenizer(line,",");
     		String tweet_id = parser.nextToken();
-    		String author_id = parser.nextToken();
+    		String username = parser.nextToken();
     		String author_name = parser.nextToken();
     		String img_link = parser.nextToken();
 
     		// Insert data into table
 
     		statement.setString(1, tweet_id);
-    		statement.setString(2, author_id);
+    		statement.setString(2, username);
     		statement.setString(3, author_name);
     		statement.setString(4, img_link);
     		statement.executeUpdate();
@@ -138,10 +138,7 @@ public class CreateDB {
      */
 
     public static void main(String[] argv) throws IOException
-    {
-    	File file = new File(".");
-    	System.out.println(file.getCanonicalPath());
-    	
+    {  	
     	if (argv.length != 0) {
     		System.err.println("No arguments required.");
     		System.exit(1);
@@ -159,11 +156,6 @@ public class CreateDB {
     		error.printStackTrace();
     	}
     	finally {
-
-    		// This will always execute, even if an exception has
-    		// been thrown elsewhere in the code - so this is
-    		// the ideal place to close the connection to the DB...
-
     		if (database != null) {
     			try {
     				database.close();

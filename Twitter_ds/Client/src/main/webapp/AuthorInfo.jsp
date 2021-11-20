@@ -19,7 +19,7 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
    </head>
    <script>
-      // gets the value of the checkbox(es) selected by the user and connect them to a string
+      // Gets the value of the radiobox selected by the user
       function connect(){
           var rdo=document.getElementsByName('rdo'); 
           var result='';
@@ -30,13 +30,14 @@
               }
           } 
       
-          // sets value to hidden input
+          // Sets value to hidden input
       	  document.getElementById("hidden_id").value=result;
           
           if(result=='')
         	  alert("Please select an author!")
       } 
       
+      // Makes sure that the user's selection is not null
       function toVaild(){
           var val = document.getElementById("hidden_id").value;
           if(val != ''){
@@ -51,9 +52,14 @@
    <body>
    	  <%-- gets parameters send by url and call service 1 to handle it --%>
       <%
+      	 // Gets the parameter passed by the GET method
          String tweets_selected = request.getParameter("selected");
+      
+      	 // Gets author's information of selected tweet(s) (in string format)
          String str_result = getStrResult(tweets_selected);
-         JSONArray json_result = convertStrToJson(str_result);
+         
+      	 // Converts string result to JSON format
+         JSONArray json_result = JSONArray.parseArray(str_result);
          %>
 
       <%-- guide for users --%>
@@ -70,7 +76,7 @@
                   <tr>
                      <th scope="col">#</th>
                      <th scope="col">Tweet ID</th>
-                     <th scope="col">Author ID</th>
+                     <th scope="col">Username</th>
                      <th scope="col">Author Name</th>
                      <th scope="col">Author's Avatar</th>
                   </tr>
@@ -81,14 +87,14 @@
                      for (int i = 0; i < json_result.size(); i++) {
                      	JSONObject obj = json_result.getJSONObject(i);
                      	String tweet_id = obj.get("tweet_id").toString();
-                     	String author_id = obj.get("author_id").toString();
+                     	String username = obj.get("username").toString();
                      	String author_name = obj.get("author_name").toString();
                      	String img_link = obj.get("img_link").toString();
                      %>
                   <tr>
                      <th scope="row">
                         <div>
-                           <input onclick="connect()" type="radio" name=rdo class="form-check-input mt-0" value=<%=author_id%>>
+                           <input onclick="connect()" type="radio" name=rdo class="form-check-input mt-0" value=<%=username%>>
                         </div>
                      </th>
                      <td>
@@ -98,7 +104,7 @@
                      </td>
                      <td>
                         <div>
-                           <%=author_id%>
+                           <%=username%>
                         </div>
                      </td>
                      <td>
@@ -129,40 +135,23 @@
       <%!static final String REST_URI = "http://localhost:3105/service1";
          static final String SERVICE1_PATH = "findAuthor/tweetID";
          
-      	 // calls web service 1 and the result obtained is a string in Json format
-         
+      	 // Calls web service 1 and the result obtained is a string in Json format        
       	 private String getOutputAsJSON(WebResource service) {
          	return service.accept(MediaType.APPLICATION_JSON).get(String.class);
          }
          
          private String getStrResult(String tweet_id) {
-        	// declares the client object
+        	// Declares the client object
          	ClientConfig clientConfig = new DefaultClientConfig();
          	Client client = Client.create(clientConfig);
          	
+         	// Calls web service 1 to get the information of author(s)
          	WebResource service1 = client.resource(REST_URI);
-         	WebResource findAuthorInfo = service1.path(SERVICE1_PATH).path("/" + tweet_id);
-         	
-         	//WebTarget target = client.target(serverUri + "/users");
-         	
+         	WebResource findAuthorInfo = service1.path(SERVICE1_PATH).path("/" + tweet_id);         	
          	String result = getOutputAsJSON(findAuthorInfo);
          	return result;
          }        
-         
-         // converts string result to JSON format
-         private JSONArray convertStrToJson(String str) {
-         	
-         	//try{
-         		JSONArray resultArray = JSONArray.parseArray(str);
-         		return resultArray;
-         	//}
-         	//catch(JSONException e){
-         		//e.printStackTrace(); 
-         		//return null;
-         	//}
-         	
-         	
-         }%>
+		 %>
    </body>
    <style type="text/css">
       body{
