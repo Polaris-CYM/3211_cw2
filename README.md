@@ -54,5 +54,3 @@ This project uses the id of multiple tweets to find authors, and select the auth
 2. select one or more of them and click `Submit`, the `127.0.0.1:8080/Clinet/AuthorInfo.jsp` will show the corresponding author.
 3. choose an author and click `Submit`, the `127.0.0.1:8080/Clinet/tweetlist.jsp` will show all his/her tweets
 4. select a tweet and click `View Details`, and the `127.0.0.1:8080/Clinet/tweeDetails.jsp` will display detailed information about this tweet, such as (posting time, number of likes, etc.)
-
-## **Video**
