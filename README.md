@@ -46,7 +46,7 @@ The home page of the application lets users select one or more tweet(s) that the
    *  run the tomcat.
    * enter `127.0.0.1:8080/Client/HomePage.jsp` in the browser to go to the homepage of the client.
 2. Using war package
-   * put war package `Client.war` which in folder `Twitter_ds/` under tomcat.
+   * put war package `Client.war` which in folder `3211_cw2/` under tomcat.
    * run the tomcat.
    * enter `127.0.0.1:8080/Client/HomePage.jsp` in the browser to go to the homepage of the client.
 
