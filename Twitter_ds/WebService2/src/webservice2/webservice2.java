@@ -41,9 +41,12 @@ public class webservice2 {
 	    return DriverManager.getConnection(url, user, password);
 	  }
 	
-	 public static String findNames(String username, Connection database)
+	 public static String findTweets(String username, Connection database)
   		   throws SQLException
-  		  {	 
+  		  {	  
+		   // Query the database with mysql statement
+		   //Store the acquired data in the list in the form of a map
+		 
   		    Statement statement = database.createStatement();
   		    ResultSet results = statement.executeQuery(
   		     "SELECT * FROM authorlist WHERE username ='" + username + "'");
@@ -59,6 +62,9 @@ public class webservice2 {
   		    	map.put("tweet_image",results.getString(7));
   		        list.add(map);	      
   		    }
+  		    
+  		   // Use gson to convert list to json format
+  		    
   		    statement.close();
   		    Gson gson = new Gson();
             String jsonstr = null;
@@ -82,7 +88,7 @@ public class webservice2 {
 				e1.printStackTrace();
 			}
 	        try {
-	        	result = findNames(username, connection);
+	        	result = findTweets(username, connection);
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -90,10 +96,10 @@ public class webservice2 {
 			}
 	        return result;
 	    }
-	    public static void main(String[] argv)
-		  {
-			 System.out.println(addJSON("BillyM2k"));
-		  }
+//	    public static void main(String[] argv)
+//		  {
+//			 System.out.println(addJSON("BillyM2k"));
+//		  }
 
 	}
 

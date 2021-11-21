@@ -7,7 +7,6 @@ import java.util.*;
 /**
  * Create and populate a table using JDBC.
  *
- * <p>The program demonstrates</p>
  * <ul>
  *   <li>Use of properties to hold JDBC driver and database details</li>
  *   <li>Use of SQL commands DROP, CREATE and INSERT</li>
@@ -85,7 +84,7 @@ public class CreateDB {
       // that the table didn't exist in the first place!
     }
 
-    // Create a fresh table
+    // Create a fresh table named authorlist
 
     statement.executeUpdate("CREATE TABLE authorlist ("
     		              + "id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
@@ -122,7 +121,7 @@ public class CreateDB {
  
     while (true) {
 
-      // Obtain user ID, surname and forename from input file
+      // Obtain username, author_name, tweet_id, tweet_content and tweet_image from input file
 
       String line = in.readLine();
       if (line == null)

@@ -22,7 +22,7 @@
       <%
          String Username = request.getParameter("selected");
          String json = getjson(Username);
-         JSONArray jsonArray = getInfoOfChannels(json);
+         JSONArray jsonArray = getAuthor(json);
          JSONObject first  = jsonArray.getJSONObject(0);
          String name = first.get("author_name").toString();
          String author_image = first.get("author_image").toString();
@@ -59,27 +59,31 @@
       </div>
       <%!static final String REST_URI = "http://localhost:9987/webservice2";
          static final String LIST_URI = "Author/authorid";
-          
+         
+         //Get json and save it in array
+         
+         private JSONArray getAuthor(String json){
+         	try{
+         		JSONArray jsonArray = new JSONArray(json);
+         		return jsonArray;
+         		}
+         	catch(JSONException e){return null;}
+         	}
+         
+         private String getOutputAsJson(WebResource service) {
+             return service.accept(MediaType.APPLICATION_JSON).get(String.class);
+         }
+         
+         // Call the value transferred from the previous page for database query
+         
          private String getjson(String authorid) throws MalformedURLException {
                 ClientConfig config = new DefaultClientConfig();
                 Client client = Client.create(config);
                 WebResource service = client.resource(REST_URI);
-                WebResource videoListService = service.path(LIST_URI).path(authorid);
-                String jsontext = getOutputAsJson(videoListService);
+                WebResource AuthorList = service.path(LIST_URI).path(authorid);
+                String jsontext = getOutputAsJson(AuthorList);
                 return jsontext;
-           	}
-         
-         private String getOutputAsJson(WebResource service) {
-                return service.accept(MediaType.APPLICATION_JSON).get(String.class);
-            }
-         
-          private JSONArray getInfoOfChannels(String json){
-          	try{
-          		JSONArray jsonArray = new JSONArray(json);
-          		return jsonArray;
-          		}
-          	catch(JSONException e){return null;}
-          	}
+           	}              
          %>
    </body>
    <style type="text/css">

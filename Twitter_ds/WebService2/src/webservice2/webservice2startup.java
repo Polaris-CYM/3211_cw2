@@ -4,6 +4,11 @@ import java.io.IOException;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.net.httpserver.HttpServer;
  
+/**
+ * Start webservice 2
+ *
+ * @author Siyuan Chen
+ */
 public class webservice2startup {
  
     static final String BASE_URI = "http://localhost:9987/webservice2/";
