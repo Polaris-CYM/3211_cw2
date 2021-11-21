@@ -32,9 +32,6 @@
       
           // Sets value to hidden input
       	  document.getElementById("hidden_id").value=result;
-          
-          if(result=='')
-        	  alert("Please select an author!")
       } 
       
       // Makes sure that the user's selection is not null
